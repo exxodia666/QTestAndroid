@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TestListScreen from './Screens/TestListScreen';
 import UserScreen from './Screens/UserScreen';
+import TestStack from './TestStack';
+import UserStack from './UserStack';
 
 const MainNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -11,11 +13,11 @@ const MainNavigator = () => {
             <Tab.Navigator>
                 <Tab.Screen
                     name="Home"
-                    component={TestListScreen}
+                    component={TestStack}
                 />
                 <Tab.Screen
                     name="User"
-                    component={UserScreen}
+                    component={UserStack}
                 />
             </Tab.Navigator>
         </NavigationContainer>

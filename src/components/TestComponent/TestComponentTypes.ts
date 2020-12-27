@@ -2,5 +2,5 @@ export default interface {
     id: string
     name: string
     count_questions: number
-    selectTest: (id: string) => void
+    selectTest: (id: string, name: string) => void
 }

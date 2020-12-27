@@ -16,14 +16,14 @@ class TestListModel implements TestListType {
             test_list: observable,
             fetchTests: action
         })
-        this.test_list = test_list.map(({ id, quiz_name, questions_count, creation_date }: ITestTypes) => new TestModel(id, quiz_name, creation_date, questions_count))
+        this.test_list = test_list.map(({ id, quiz_name, questions_count, creation_date, questions }: ITestTypes) => new TestModel(id, quiz_name, creation_date, questions_count, questions))
     }
     async fetchTests() {
         this.test_list = []
         this.status = status.pending;
         try {
             const res = await axios.get('http://134.249.181.40:7777/api/');
-            const tests: ITestTypes[] = res.data.quizzes.map(({ id, creation_date, questions_count, quiz_name }: ResponseType) => new TestModel(id, quiz_name, creation_date, questions_count));
+            const tests: ITestTypes[] = res.data.quizzes.map(({ id, creation_date, questions_count, quiz_name }: ResponseType) => new TestModel(id, quiz_name, creation_date, questions_count, []));
             runInAction(() => {
                 this.status = status.success
                 this.test_list = tests;

@@ -4,8 +4,8 @@ export interface IQuestionTypes {
     id: string,
     quiz_id: string
     wording: string
-    text: string | undefined
-    image: string | undefined
+    text: string
+    image: string
     is_multiple_choice: boolean
     choices: IChoiceTypes[]
 }

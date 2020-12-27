@@ -9,13 +9,12 @@ import { useStore } from '../../hooks/useStore';
 import TestListType from '../../models/TestListModel/TestListTypes';
 import ITestTypes from '../../models/TestModel/ITestTypes';
 
-const TestListScreen: React.FunctionComponent = () => {
+const TestListScreen: React.FunctionComponent<any> = ({ navigation }) => {
     const tests: TestListType = (useStore('TestListStore'));
-    console.log(tests.test_list);
     const responseStatus = tests.status;
 
-    const handeleSelect = (id: string): void => {
-        console.log(id)
+    const handeleSelect = (test: ITestTypes): void => {
+        navigation.navigate('Test', test)
     }
 
     useEffect(() => {
@@ -27,13 +26,14 @@ const TestListScreen: React.FunctionComponent = () => {
     } else if (responseStatus === status.success) {
         return (
             <ScrollView>
-                {tests.test_list.map(({ id, quiz_name, questions_count }: ITestTypes) => {
+                {tests.test_list.map((test: ITestTypes) => {
+                    console.log(test.fetchQuestions);
                     return <TestComponent
-                        key={id}
-                        id={id}
-                        name={quiz_name}
-                        count_questions={questions_count}
-                        selectTest={handeleSelect}
+                        key={test.id}
+                        id={test.id}
+                        name={test.quiz_name}
+                        count_questions={test.questions_count}
+                        selectTest={() => handeleSelect(test)}
                     />
                 }
                 )}

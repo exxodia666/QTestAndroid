@@ -19,8 +19,10 @@ class ChoiceModel implements IChoiceTypes {
         this.id = id;
         this.question_id = question_id;
         this.text = text;
+
     }
     toggleSelect = (): void => {
+        console.log('Dispatch');
         this.isSelected = !this.isSelected;
     }
 }

@@ -8,7 +8,7 @@ const TestComponent: React.FC<TestComponentTypes> = (props) => {
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={() => selectTest(id)}
+            onPress={() => selectTest(id, name)}
         >
             <Text style={styles.text}>{name}</Text>
             <Text style={styles.text}>{count_questions} Вопрос</Text>

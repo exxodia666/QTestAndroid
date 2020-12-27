@@ -3,5 +3,5 @@ export interface IChoiceTypes {
     question_id: string,
     text: string
     isSelected: boolean
-    setIsSelected?: () => void
+    toggleSelect: () => void
 }
