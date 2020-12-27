@@ -18,8 +18,8 @@ const TestScreen: React.FunctionComponent<any> = ({ route }) => {
     const sendAnswers: any = (useStore('TestListStore').test_list.filter(i => i.id === id)[0].sendAnswers);
     const user: User = useStore('UserStore');
     const questions: IQuestionTypes[] = (useStore('TestListStore').test_list.filter(i => i.id === id)[0].questions!);
-    const rating: () => number = (useStore('TestListStore').test_list.filter(i => i.id === id)[0].computedRating);
-    
+    const rating: number = (useStore('TestListStore').test_list.filter(i => i.id === id)[0].rating!);
+
     useEffect(() => {
         fetchQuestions(id);
     }, [])
@@ -29,7 +29,7 @@ const TestScreen: React.FunctionComponent<any> = ({ route }) => {
     } else if (responseStatus === status.success) {
         return (
             <ScrollView>
-                <Text style={{ color: 'black' }}>{ }</Text>
+                <Text style={{ color: 'black' }}>{rating * 100}</Text>
                 {questions.map(({ id, quiz_id, wording, is_multiple_choice, image, text, choices }: IQuestionTypes) => {
                     return <Question
                         id={id}
