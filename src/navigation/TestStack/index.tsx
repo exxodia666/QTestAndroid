@@ -2,6 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TestListScreen from '../Screens/TestListScreen';
 import TestScreen from '../Screens/TestScreen';
+import HeaderTittle from '../../components/HeaderTittle/HeaderTittle';
+import QuestionsDrawer from '../QuestionsDrawer';
 
 type header = {
     title: string
@@ -9,13 +11,34 @@ type header = {
 const TestStack: React.FC = () => {
     const Stack = createStackNavigator();
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="TestList" component={TestListScreen} />
+        <Stack.Navigator
+            screenOptions={() => ({
+                headerTitle: (props: any) => <HeaderTittle name={props.children} />,
+                headerTintColor: '#fff',
+                headerStyle: {
+                    backgroundColor: '#414141'
+                }
+            })}
+        >
+            <Stack.Screen
+                name="QTEST"
+                component={TestListScreen}
+
+            />
+
             <Stack.Screen
                 name="Test"
                 component={TestScreen}
-                options={({ route }): header => ({ title: route.params.quiz_name })}
             />
+            {/* <Stack.Screen
+                name="Test"
+                component={QuestionsDrawer}
+                options={({ route }: any) => {
+                    return {
+                        headerTitle: () => <HeaderTittle name={route.params.quiz_name} />,
+                    }
+                }}
+            /> */}
         </Stack.Navigator>
     );
 }

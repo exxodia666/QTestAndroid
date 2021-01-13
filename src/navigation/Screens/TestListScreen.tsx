@@ -12,22 +12,20 @@ import ITestTypes from '../../models/TestModel/ITestTypes';
 const TestListScreen: React.FunctionComponent<any> = ({ navigation }) => {
     const tests: TestListType = (useStore('TestListStore'));
     const responseStatus = tests.status;
-
     const handeleSelect = (test: ITestTypes): void => {
         navigation.navigate('Test', test)
     }
-
     useEffect(() => {
         tests.fetchTests();
     }, [])
 
+    console.log('Test List Screen')
     if (responseStatus === status.pending) {
         return (<Loader />);
     } else if (responseStatus === status.success) {
         return (
             <ScrollView>
                 {tests.test_list.map((test: ITestTypes) => {
-                    console.log(test.fetchQuestions);
                     return <TestComponent
                         key={test.id}
                         id={test.id}

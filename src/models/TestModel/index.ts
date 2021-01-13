@@ -54,7 +54,7 @@ class TestModel implements ITestTypes {
         })
     }
 
-    get computedRating(): number {
+    get computedRating() {
         return this.rating * 100;
     }
 
@@ -65,22 +65,25 @@ class TestModel implements ITestTypes {
             const res = await axios.get(`http://134.249.181.40:7777/api/${id}`);
             const questions: IQuestionTypes[] = res.data.questions.map(
                 (item: ResponseType) => {
+                    console.log(item)
                     return new QuestionModel(item.question.id,
                         item.question.quiz_id,
                         item.question.wording,
                         item.question.text,
                         item.question.image,
                         item.question.is_multiple_choice,
-                        item.choices.map(item => {
-                            return new ChoiceModel(item.id, item.question_id, item.text)
+                        item.choices.map(i => {
+                            return new ChoiceModel(i.id, i.question_id, i.text)
                         }))
                 })
+
             runInAction(() => {
                 this.status = status.success
                 this.questions = questions;
             })
         } catch (error) {
             runInAction(() => {
+                console.log('ERROR')
                 this.status = status.error
             })
         }
@@ -114,26 +117,3 @@ class TestModel implements ITestTypes {
     }
 }
 export default TestModel;
-
-
-/*
-const sendAnswers = ({ obj, id }) =>
-  Axios.post(`http://134.249.181.40:7777/api/${id}/answer/`, obj);
-
-//TODO NORMAL USER
-
-function* workerSendData(action) {
-  const reqObj = {
-    name: action.payload.user,
-    answers: action.payload.obj.map((item) => ({
-      question_id: item.question.id,
-      choices_id: item.choices
-        .filter((i) => i.isSelected)
-        .map((i) => {
-          return i.id;
-        }),
-    })),
-  };
-  const res = yield call(sendAnswers, { obj: reqObj, id: action.payload.id });
-  yield put(addResults(res));
-}*/

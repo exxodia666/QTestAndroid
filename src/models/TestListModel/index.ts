@@ -9,6 +9,7 @@ import status from '../../enum/status';
 class TestListModel implements TestListType {
     test_list: ITestTypes[] = [];
     status: status = status.success;
+    errors: null;
 
     constructor(test_list: ITestTypes[]) {
         makeObservable(this, {
@@ -29,8 +30,10 @@ class TestListModel implements TestListType {
                 this.test_list = tests;
             })
         } catch (error) {
+            console.log(error);
             runInAction(() => {
-                this.status = status.error
+                this.status = status.error;
+                this.errors = error;
             })
         }
     }

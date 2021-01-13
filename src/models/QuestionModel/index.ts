@@ -3,14 +3,14 @@ import { observable } from 'mobx';
 import { makeObservable } from 'mobx';
 import ChoiceModel from '../ChoicesModel/ChoiceModel';
 import { IChoiceTypes } from './../ChoicesModel/IChoices';
-import { IQuestionTypes } from './IQuestionTypes';
+import { Image, IQuestionTypes } from './IQuestionTypes';
 
 class QuestionModel implements IQuestionTypes {
     id = 'string';
     quiz_id = '';
     wording = '';
     text: string;
-    image: string;
+    image: Image;
     is_multiple_choice = false;
     choices: IChoiceTypes[] = [];
 
@@ -18,7 +18,7 @@ class QuestionModel implements IQuestionTypes {
         quiz_id: string,
         wording: string,
         text: string,
-        image: string,
+        image: Image,
         is_multiple_choice: boolean,
         choices: IChoiceTypes[]) {
         this.id = id;
@@ -35,8 +35,13 @@ class QuestionModel implements IQuestionTypes {
             text: observable,
             image: observable,
             is_multiple_choice: observable,
-            choices: observable
+            choices: observable,
+            setFalseAllChoices: action
         })
+    }
+    setFalseAllChoices = () => {
+
+        this.choices.forEach(e => e.isSelected = false);
     }
 }
 export default QuestionModel;

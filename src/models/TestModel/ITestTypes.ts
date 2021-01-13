@@ -12,5 +12,5 @@ export default interface ITestTypes {
     rating?: number
     fetchQuestions: (id: string) => void
     sendAnswers: (user: User) => void
-    computedRating: () => number
+    computedRating: number
 }
