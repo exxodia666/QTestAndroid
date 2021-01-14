@@ -12,56 +12,46 @@ const UserScreen: React.FC = () => {
     const user: User = useStore('UserStore');
     useEffect(() => {
         user.loadFromAsync();
-    }, [])
+    }, [user.results])
 
     useEffect(() => {
-        if (user.id.length) {
-            user.fetchResults();
-        }
+        //if (user.id.length) {
+        user.fetchResults();
+        //}
         return () => {
             user.clearResults()
         }
     }, [user.id])
-
-
-
     //todo flatList
     const [name, setname] = useState('');
-    console.log('user results')
-    console.log(user.results)
+
     return (
         <View>
+            <Text>USER SCREEN</Text>
             {Boolean(user.results!.length) &&
-
-                <View style={{ borderWidth: 1, margin: 5, padding: 5 }}>
-                    <ScrollView>
-                        {user.results!.map(e => {
-                            return (<Text >{`${e.quiz_name}${e.pass_date}${e.rating}`}</Text>)
-                        })}
-                    </ScrollView>
-                </View>
+                <ScrollView>
+                    {user.results!.map(e => {
+                        return (<ResultComponent key={e.pass_date} quiz_name={e.quiz_name} rating={e.rating} pass_date={e.pass_date} />)
+                    })}
+                </ScrollView>
             }
-
-            <View style={{ borderWidth: 1, margin: 5, padding: 5 }}>
-                <Text>
-                    id: {user.id}
-                </Text>
-                <Text>key: {user.key}</Text>
-                <Text>name: {user.name}</Text>
-            </View>
-
-            <Text>{name}</Text>
             <TextInput
+                placeholder='Enter your name'
+                style={{ borderWidth: 1, margin: 5 }}
                 onChangeText={(e) => setname(e)}
                 value={name}
             />
             <Button
-                title='AUTH'
+                title='Login'
                 onPress={() => user.authUser(name)}
             />
-            <Text>USER SCREEN</Text>
-        </View>
+            <Button
+                color='red'
+                title='Logout'
+                onPress={() => user.logoutUser()}
+            />
+
+        </View >
     )
 }
-
 export default observer(UserScreen);

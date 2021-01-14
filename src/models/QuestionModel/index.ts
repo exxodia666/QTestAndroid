@@ -40,8 +40,9 @@ class QuestionModel implements IQuestionTypes {
         })
     }
     setFalseAllChoices = () => {
-
-        this.choices.forEach(e => e.isSelected = false);
+        if (!this.is_multiple_choice) {
+            this.choices.forEach(e => e.isSelected = false);
+        }
     }
 }
 export default QuestionModel;

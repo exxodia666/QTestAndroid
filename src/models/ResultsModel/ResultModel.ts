@@ -1,5 +1,6 @@
 import { observable, makeObservable } from 'mobx';
 import ResultTypes from './ResultTypes';
+
 class ResultModel implements ResultTypes {
     id: string = '';
     name: string = '';

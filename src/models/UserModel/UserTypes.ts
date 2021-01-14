@@ -28,6 +28,7 @@ interface User {
     loadFromAsync?: () => void
     fetchResults?: () => void
     clearResults?: () => void
+    logoutUser?: () => void
 }
 
 export default User;

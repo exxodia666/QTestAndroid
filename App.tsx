@@ -8,6 +8,8 @@ configure({
   useProxies: "never"
 })
 //TODO TESTS AS DROPDOWN MENU
+//LOGOUT
+//Private tests
 const App: React.FC = () => {
   return (
     <StoresProvider value={stores}>

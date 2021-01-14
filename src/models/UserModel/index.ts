@@ -42,9 +42,11 @@ class UserModel implements User {
             status: observable,
             errors: observable,
             authUser: action,
+            logoutUser: action,
             loadFromAsync: action,
             fetchResults: action,
-            clearResults: action
+            clearResults: action,
+            resetStatus: action
         })
         this.id = id;
         this.name = name;
@@ -78,37 +80,33 @@ class UserModel implements User {
             })
         }
     }
-
-    async logoutUser(key: string) {
-        // this.name = ''
-        // this.status = status.pending;
-        // try {
-        //     const res = await axios.post('http://134.249.181.40:7777/api/dude', {
-        //         dude: {
-        //             name
-        //         }
-        //     });
-        //     // const tests: ResultTypes[] = res.data.quizzes.map(({ id, creation_date, questions_count, quiz_name }: ResponseType) => new TestModel(id, quiz_name, creation_date, questions_count, []));
-        //     console.log(res.data)
-        //     runInAction(() => {
-        //         this.status = status.success
-        //         this.name = res.data.dude.name;
-        //         this.id = res.data.dude.id;
-        //         this.key = res.data.dude.editing_key;
-        //         const user: User = {
-        //             name: this.name,
-        //             id: this.id,
-        //             key: this.key,
-        //         }
-        //         _storeData('UserModel', { ...user });
-        //     })
-        // } catch (error) {
-        //     console.log(error);
-        //     runInAction(() => {
-        //         this.status = status.error;
-        //         this.errors = error;
-        //     })
-        // }
+    resetStatus() {
+        this.status = status.pending
+    }
+    async logoutUser() {
+        const req = {
+            editing_key: this.key
+        }
+        try {
+            const res = await axios.delete(`http://134.249.181.40:7777/api/dude/${this.id}`, { data: req });
+            runInAction(() => {
+                this.status = status.success
+                const user: User = {
+                    id: '',
+                    name: '',
+                    key: ''
+                }
+                this.name = '';
+                this.id = '';
+                this.key = '';
+                _storeData('UserModel', user);
+            })
+        } catch (error) {
+            runInAction(() => {
+                this.status = status.error;
+                this.errors = error;
+            })
+        }
     }
 
     async loadFromAsync() {

@@ -6,6 +6,7 @@ import { useStore } from '../../hooks/useStore';
 import { Text } from 'react-native';
 import { View } from 'react-native';
 import HeaderTittle from '../../components/HeaderTittle/HeaderTittle';
+import { observer } from 'mobx-react-lite';
 
 
 const UserStack: React.FC = () => {
@@ -15,11 +16,13 @@ const UserStack: React.FC = () => {
     useEffect(() => {
         user.loadFromAsync();
     }, []);
+    if (user.name.length) {
 
+    }
     return (
         <Stack.Navigator
             screenOptions={() => ({
-                headerTitle: (props) => <HeaderTittle name={user.name} />,
+                //headerTitle: (props) => <HeaderTittle name={user.name} />,
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#414141'
@@ -27,7 +30,7 @@ const UserStack: React.FC = () => {
             })}
         >
             <Stack.Screen
-                name="Results"
+                name="User"
                 component={UserScreen}
                 options={{
                     headerRight: () => <View style={{
@@ -50,4 +53,4 @@ const UserStack: React.FC = () => {
     );
 }
 
-export default UserStack;
+export default observer(UserStack);

@@ -31,4 +31,4 @@ const HeaderTittle: React.FC<HeaderTitleTypes> = ({ name }) => {
     )
 }
 
-export default HeaderTittle
+export default HeaderTittle;
