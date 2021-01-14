@@ -13,9 +13,23 @@ type answer = {
     choices_id: string[]
 }
 type RequestType = {
-    name: string,
+    dude_id: string,
     answers: answer[]
 }
+
+// {
+//     "dude_id": "928cdff8-2542-45b5-bddc-c3574da82663",
+//         "answers": [{
+//             "question_id": "c0a9fa29-1e0a-433d-9f54-090e8a98e765",
+//             "choices_id": ["1892bb83-41dd-424c-b4c2-dec920c0c0e9", "8e305407-3dba-4794-93b8-3cfb9376957f"]
+//         },
+//         {
+//             "question_id": "391b2ca1-dcf3-4b45-81b4-84a9764cfb17",
+//             "choices_id": ["f2915eca-f49d-4aae-b348-e0380125d11b"]
+//         }]
+// }
+
+
 
 type ResponseType = {
     choices: IChoiceTypes[],
@@ -91,7 +105,7 @@ class TestModel implements ITestTypes {
 
     sendAnswers = async (user: User) => {
         const reqObj: RequestType = {
-            name: user.name,
+            dude_id: user.id,
             answers: this.questions.map(item => {
                 const answer: answer = {
                     question_id: item.id,
@@ -103,7 +117,9 @@ class TestModel implements ITestTypes {
             })
         }
         try {
+            //console.log(reqObj);
             const res = await axios.post(`http://134.249.181.40:7777/api/${this.id}/answer/`, reqObj);
+            //console.log(res)
             runInAction(() => {
                 console.log('res:' + res.data.rating);
                 this.rating = res.data.rating;

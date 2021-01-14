@@ -18,7 +18,7 @@ const HeaderTittle: React.FC<HeaderTitleTypes> = ({ name }) => {
                 fontSize: 20
             }}
             >
-                {name[0].toUpperCase()}
+                {name.length && name[0].toUpperCase()}
             </Text>
             <Text style={{
                 color: 'white',

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import UserScreen from '../Screens/UserScreen';
 import User from '../../models/UserModel/UserTypes';
@@ -10,11 +10,16 @@ import HeaderTittle from '../../components/HeaderTittle/HeaderTittle';
 
 const UserStack: React.FC = () => {
     const Stack = createStackNavigator();
-    const { id, name, setName }: User = useStore('UserStore');
+    const user: User = useStore('UserStore');
+
+    useEffect(() => {
+        user.loadFromAsync();
+    }, []);
+
     return (
         <Stack.Navigator
             screenOptions={() => ({
-                headerTitle: (props) => <HeaderTittle name={props.children} />,
+                headerTitle: (props) => <HeaderTittle name={user.name} />,
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#414141'
@@ -36,7 +41,7 @@ const UserStack: React.FC = () => {
                             fontSize: 16
                         }}
                         >
-                            Logged as: {name}
+                            Logged as: {user.name}
                         </Text>
                     </View>
                 }}

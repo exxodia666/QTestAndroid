@@ -6,6 +6,7 @@ import ITestTypes from "./TestModel/ITestTypes";
 import UserModel from "./UserModel";
 import User from "./UserModel/UserTypes";
 //import { CounterStore } from "./CounterStore";
+import { create, persist } from 'mobx-persist'
 
 const initialTestListStore: ITestTypes[] = [{
     id: '215gagas152151',
@@ -17,7 +18,12 @@ const initialTestListStore: ITestTypes[] = [{
             quiz_id: '215gagas152151',
             wording: 'dasfasfas',
             text: '',
-            choices: [{ id: 'dasdas', question_id: 'fsafas', isSelected: false, text: 'dasfasfaf' }],
+            choices: [{
+                id: 'dasdas',
+                question_id: 'fsafas',
+                isSelected: false,
+                text: 'dasfasfaf'
+            }],
             //image: {'dsadasd'},
             is_multiple_choice: false,
         },
@@ -25,21 +31,26 @@ const initialTestListStore: ITestTypes[] = [{
 }];
 
 const initialUserStore: User = {
-    name: 'Sosanya',
-    id: 'g1g13-21fvdfb-tgtbr4-3g4tgtr',
+    name: '',
+    id: '',
+    key: ''
 };
 
-
 const initialResultListStore: ResultTypes[] = [{
-    name: 'Sosanya',
-    id: 'g1g13-21fvdfb-tgtbr4-3g4tgtr',
-    rating: 100
+    name: '',
+    id: '',
+    rating: 0
 }];
+
+
 
 export const stores = Object.freeze({
     UserStore: new UserModel(initialUserStore.id, initialUserStore.name),
     TestListStore: new TestListModel(initialTestListStore),
     ResultListStore: new ResultListModel(initialResultListStore)
 });
+
+
 export const storesContext = React.createContext(stores);
+
 export const StoresProvider = storesContext.Provider;
